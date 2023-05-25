@@ -2,14 +2,15 @@ package cat.itacademy.barcelonactiva.DebonVillagrasa.Miquel.s04.t02.n01.S04T02N0
 
 import jakarta.persistence.*;
 
-@Entity
+
+@Entity //Data Model
 public class Fruita {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column (length = 50, nullable = false)
     private String name;
-    @Column
+    @Column (name = "quantityKg")
     private int quantityKg;
 
 

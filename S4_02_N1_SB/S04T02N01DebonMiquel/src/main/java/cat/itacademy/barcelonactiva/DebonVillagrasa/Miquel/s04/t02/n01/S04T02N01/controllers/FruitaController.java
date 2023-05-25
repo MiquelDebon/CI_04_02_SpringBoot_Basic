@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 //@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/fruita")
 public class FruitaController {
     @Autowired
     FruitaRepository fruitaRepository;
 
-    @GetMapping("fruites")
-    public ResponseEntity<List<Fruita>> getAllFruits(){
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Fruita>> getAll(){
         try{
             List<Fruita> fruits = new ArrayList<>();
             if(fruits != null)
@@ -33,8 +34,8 @@ public class FruitaController {
         }
     }
 
-    @GetMapping("/fruites/{id}")
-    public ResponseEntity<Fruita> getFruitById(@PathVariable("id")int id){
+    @GetMapping("/getOne/{id}")
+    public ResponseEntity<Fruita> getOneById(@PathVariable("id")int id){
         Optional<Fruita> fruia = fruitaRepository.findById(id);
         if(fruia.isPresent()){
             return new ResponseEntity<>(fruia.get(), HttpStatus.OK);
@@ -43,8 +44,30 @@ public class FruitaController {
         }
     }
 
-    @PostMapping("/fruites")
-    public ResponseEntity<Fruita> createFruit(@RequestBody Fruita fruita){
+    //Rehacer -  No funciona!!!
+    /*
+    @GetMapping("/fruites/minimumquantity/quantity")
+    public ResponseEntity<List<Fruita>> getFruitLoweMinimumQuantity(@PathVariable("quantity") int quantity){
+        try{
+            List<Fruita> fruits = new ArrayList<>(fruitaRepository.findAll());
+
+            if(fruits.isEmpty()){
+                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }else{
+                List<Fruita>minimumFruita = fruits.stream()
+                        .filter(f -> f.getQuantityKg() < quantity)
+                        .toList();
+                return new ResponseEntity<>(minimumFruita, HttpStatus.OK);
+            }
+
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    */
+
+    @PostMapping("/add")
+    public ResponseEntity<Fruita> addFruit(@RequestBody Fruita fruita){
         try{
             Fruita _fruita = fruitaRepository
                     .save(new Fruita(fruita.getId(), fruita.getName(), fruita.getQuantityKg()));
@@ -55,7 +78,7 @@ public class FruitaController {
         }
     }
 
-    @PutMapping("/fruites/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Fruita> updateFruit(@PathVariable("id") int id, @RequestBody Fruita fruita){
         Optional<Fruita> fruitaData = fruitaRepository.findById(id);
 
@@ -70,4 +93,18 @@ public class FruitaController {
         }
     }
 
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") int id){
+        try{
+            Optional<Fruita> fruita = fruitaRepository.findById(id);
+            if(fruita.isPresent()){
+                fruitaRepository.deleteById(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
