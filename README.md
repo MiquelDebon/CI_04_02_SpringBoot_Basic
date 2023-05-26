@@ -2,3 +2,4 @@
 <br>
 <h4>References:</h4>
 <li>Githbub: https://github.com/bezkoder/spring-boot-h2-database-crud</li>
+<li>JPA Repository Query -  https://www.bezkoder.com/jpa-repository-query/</li>>

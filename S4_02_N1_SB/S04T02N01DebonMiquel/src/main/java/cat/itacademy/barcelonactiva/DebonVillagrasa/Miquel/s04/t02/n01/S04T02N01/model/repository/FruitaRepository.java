@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FruitaRepository extends JpaRepository<Fruita, Integer> {
-    List<Fruita> findByName(String name);
-    List<Fruita> findByQuantityKg (int quantityKg);
+    List<Fruita> findByQuantityKgLessThan(int quantityKg);
+    List<Fruita> findByNameContainingIgnoreCase(String name);
 
-    //MOLT IMPORTANT EL NOM DEl METODE!!!
-
+    //MOLT IMPORTANT EL NOM DEl METODE!!! PENDENT a estudiar!
+    //https://www.bezkoder.com/jpa-repository-query/
 }

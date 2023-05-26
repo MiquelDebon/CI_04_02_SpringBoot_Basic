@@ -43,27 +43,6 @@ public class FruitaController {
         }
     }
 
-    //Rehacer -  No funciona!!!
-    /*
-    @GetMapping("/fruites/minimumquantity/quantity")
-    public ResponseEntity<List<Fruita>> getFruitLoweMinimumQuantity(@PathVariable("quantity") int quantity){
-        try{
-            List<Fruita> fruits = new ArrayList<>(fruitaRepository.findAll());
-
-            if(fruits.isEmpty()){
-                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }else{
-                List<Fruita>minimumFruita = fruits.stream()
-                        .filter(f -> f.getQuantityKg() < quantity)
-                        .toList();
-                return new ResponseEntity<>(minimumFruita, HttpStatus.OK);
-            }
-
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    */
 
     @PostMapping("/add")
     public ResponseEntity<Fruita> addFruit(@RequestBody Fruita fruita){
@@ -78,12 +57,12 @@ public class FruitaController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Fruita> updateFruit(@PathVariable("id") int id, @RequestBody Fruita fruita){
-        Optional<Fruita> fruitaData = fruitaService.findById(id);
+    public ResponseEntity<Fruita> updateFruit(@PathVariable int id, @RequestBody Fruita fruita){
+        Optional<Fruita> fruitaToUpdate = fruitaService.findById(id);
 
-        if(fruitaData.isPresent()){
-            Fruita newfruita = fruitaData.get();
-            newfruita.setId(fruita.getId()); //da problemas esto creo!
+        if(fruitaToUpdate.isPresent()){
+            Fruita newfruita = fruitaToUpdate.get();
+            newfruita.setId(id);
             newfruita.setName(fruita.getName());
             newfruita.setQuantityKg(fruita.getQuantityKg());
             return new ResponseEntity<>(fruitaService.save(newfruita), HttpStatus.OK);
@@ -106,4 +85,59 @@ public class FruitaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    /**
+     *
+     * EXTRAAA
+     *
+     */
+
+    //Method using the JPA Repository Query
+    @GetMapping("/minimumquantity/{quantity}")
+    public ResponseEntity<List<Fruita>> findByQuantityKgLessThan(@PathVariable int quantity){
+        try{
+            List<Fruita> fruitWithQuantity = new ArrayList<>(fruitaService.findByQuantityKgLessThan(quantity));
+
+            if(fruitWithQuantity.isEmpty()){
+                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }else{
+                return new ResponseEntity<>(fruitWithQuantity, HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //Method achieving same result using Lambdas
+    @GetMapping("/minimumquantityLambda/{quantity}")
+    public ResponseEntity<List<Fruita>> findByQuantityKgLessThanWithLambda(@PathVariable int quantity){
+        try{
+            List<Fruita> allFruits = new ArrayList<>(fruitaService.findAll());
+
+            if(allFruits.isEmpty()){
+                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }else{
+                List<Fruita>minimumFruita = allFruits.stream()
+                        .filter(f -> f.getQuantityKg() < quantity)
+                        .toList();
+                return new ResponseEntity<>(minimumFruita, HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("nameContaining/{name}")
+    public ResponseEntity<List<Fruita>> findListFruitsContainingName(@PathVariable String name){
+        try{
+            List<Fruita> fruitsWithName = new ArrayList<>(fruitaService.findByNameContainingIgnoreCase(name));
+            if(fruitsWithName.isEmpty()){
+                return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }else{
+                return new ResponseEntity<>(fruitsWithName, HttpStatus.OK);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
