@@ -1,4 +1,4 @@
-package cat.itacademy.barcelonactiva.DebonVillagrasa.Miquel.s04.t02.n01.S04T02N01.model;
+package cat.itacademy.barcelonactiva.DebonVillagrasa.Miquel.s04.t02.n01.S04T02N01.Entity;
 
 import jakarta.persistence.*;
 
