@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/fruita")
 public class FruitaController {
     @Autowired
-    FruitaServiceImpl fruitaService;
+    private FruitaServiceImpl fruitaService;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Fruita>> getAll(){
