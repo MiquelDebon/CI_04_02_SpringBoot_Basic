@@ -1,6 +1,6 @@
-package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.repository;
+package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.model.repository;
 
-import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.entity.Fruita;
+import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.model.entity.Fruita;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +14,4 @@ public interface FruitaRepository extends JpaRepository<Fruita, Integer> {
 
     //MOLT IMPORTANT EL NOM DEl METODE!!! PENDENT a estudiar!
     //https://www.bezkoder.com/jpa-repository-query/
-
 }
