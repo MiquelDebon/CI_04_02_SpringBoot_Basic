@@ -32,8 +32,8 @@ Taking advantage of the JPA specification, you will have to persist in a MongoDB
 ### Nivell 2 - MySQL Database:
 - Spring MySQL - https://spring.io/guides/gs/accessing-data-mysql/
 ### Nivell 3 - MongoDB Database:
-
-
+- https://www.devglan.com/spring-boot/spring-boot-mongodb-configuration
+- https://www.baeldung.com/spring-response-entity
 <hr>
 <br>
 

@@ -12,7 +12,10 @@ public interface FruitaService{
     Optional<Fruita> findById(int id);
     Fruita save(Fruita fruita);
     void deleteById(int id);
+    /*
     List<Fruita> findByQuantityKgLessThan(int quantityKg);
     List<Fruita> findByNameContainingIgnoreCase(String name);
 
+
+     */
 }

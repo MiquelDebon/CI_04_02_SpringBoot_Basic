@@ -22,8 +22,7 @@ public class FruitaController {
     public ResponseEntity<List<Fruita>> getAll(){
         try{
             List<Fruita> fruits = new ArrayList<>();
-            if(fruits != null)
-                fruitaService.findAll().forEach(fruits::add);
+            fruitaService.findAll().forEach(fruits::add);
 
             if(fruits.isEmpty())
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,9 +54,23 @@ public class FruitaController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/update")
+    public ResponseEntity<Fruita> updateFruit( @RequestBody Fruita fruita){
+        Optional<Fruita> fruitaToUpdate = fruitaService.findById(fruita.getId());
+
+        if(fruitaToUpdate.isPresent()){
+            Fruita newfruita = fruitaToUpdate.get();
+            newfruita.setId(fruita.getId());
+            newfruita.setName(fruita.getName());
+            newfruita.setQuantityKg(fruita.getQuantityKg());
+            return new ResponseEntity<>(fruitaService.save(newfruita), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Fruita> updateFruit(@PathVariable int id, @RequestBody Fruita fruita){
+    public ResponseEntity<Fruita> updateFruitId(@PathVariable int id, @RequestBody Fruita fruita){
         Optional<Fruita> fruitaToUpdate = fruitaService.findById(id);
 
         if(fruitaToUpdate.isPresent()){
@@ -71,7 +84,7 @@ public class FruitaController {
         }
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") int id){
         try{
             Optional<Fruita> fruita = fruitaService.findById(id);
