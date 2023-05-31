@@ -1,9 +1,13 @@
 package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.controller;
 
 import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.model.entity.Fruita;
+import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.model.repository.FruitaRepository;
 import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n03.S04T02N03DebonMiquel.model.services.FruitaServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +18,19 @@ import java.util.Optional;
 @RequestMapping("/fruita")
 public class FruitController {
     @Autowired
-    FruitaServiceImpl fruitaService;
+    private FruitaServiceImpl fruitaService;
+    private static Logger LOG = LoggerFactory.getLogger(FruitController.class);
 
     @PostMapping("/add")
-    public ResponseEntity<String> addFruits(@RequestBody Fruita fruita) {
-        fruitaService.save(fruita);
-        return new ResponseEntity<>("Fruit add", HttpStatus.CREATED);
+    public ResponseEntity<Fruita> addFruits(@RequestBody Fruita fruita) {
+        try{
+            fruitaService.save(fruita);
+            System.out.println("Product added");
+            LOG.info("Using method createFruit");
+            return new ResponseEntity<>(fruita, HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/getOne/{id}")
@@ -33,10 +44,9 @@ public class FruitController {
                         .status(HttpStatus.NOT_FOUND)
                         .eTag("error")
                         .body(null);
-
             }
         }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -89,7 +99,39 @@ public class FruitController {
         }
     }
 
+    /**
+     *
+     * EXTRAA
+     *
+     */
 
+    @GetMapping("/minimumquantity/{quantity}")
+    public ResponseEntity<List<Fruita>> getFruitByQuantityKgLessThan(@PathVariable int quantity){
+        try{
+            List<Fruita> listFruits = fruitaService.findByQuantityKgLessThan(quantity);
+            if(!listFruits.isEmpty()){
+                return new ResponseEntity<>(listFruits, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/nameContaining/{name}")
+    public ResponseEntity<List<Fruita>> getFruitByName(@PathVariable String name){
+        try{
+            List<Fruita> listFruits = fruitaService.findByNameContainingIgnoreCase(name);
+            if(!listFruits.isEmpty()){
+                return new ResponseEntity<>(listFruits, HttpStatusCode.valueOf(200));
+            }else{
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

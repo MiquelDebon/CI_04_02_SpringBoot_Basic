@@ -37,7 +37,12 @@ public class FruitaServiceImpl implements FruitaService {
         fruitaRepository.deleteById(id);
     }
 
-    /*
+    /**
+     *
+     * EXTRAA
+     *
+     */
+
     @Override
     public List<Fruita> findByQuantityKgLessThan(int quantityKg) {
         return fruitaRepository.findByQuantityKgLessThan(quantityKg);
@@ -48,5 +53,5 @@ public class FruitaServiceImpl implements FruitaService {
         return fruitaRepository.findByNameContainingIgnoreCase(name);
     }
 
-     */
+
 }

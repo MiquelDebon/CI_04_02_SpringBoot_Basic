@@ -10,8 +10,8 @@ import java.util.List;
 
 @Repository
 public interface FruitaRepository extends MongoRepository<Fruita, Integer> {
-    //List<Fruita> findByQuantityKgLessThan(int quantityKg);
-    //List<Fruita> findByNameContainingIgnoreCase(String name);
+    List<Fruita> findByQuantityKgLessThan(int quantityKg);
+    List<Fruita> findByNameContainingIgnoreCase(String name);
 
 
 }

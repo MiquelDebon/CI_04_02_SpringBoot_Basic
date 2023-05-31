@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 
-@Document(collation = "Fruita")
+@Document(collection = "Fruita")
 public class Fruita {
     @Id
     private int id;

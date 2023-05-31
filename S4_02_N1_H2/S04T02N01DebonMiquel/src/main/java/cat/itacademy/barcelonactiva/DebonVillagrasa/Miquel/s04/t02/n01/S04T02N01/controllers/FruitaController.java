@@ -90,7 +90,7 @@ public class FruitaController {
             Optional<Fruita> fruita = fruitaService.findById(id);
             if(fruita.isPresent()){
                 fruitaService.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
