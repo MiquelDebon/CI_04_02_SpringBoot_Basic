@@ -17,7 +17,21 @@ Taking advantage of the JPA specification, you will have to persist in a MongoDB
 - model.service
 - model.repository
 
-> Tested with Postman
+> ✅ Tested with Postman
+
+```
+API CRUD:
+- http://localhost:9000/sucursal/add
+
+- http://localhost:9000/sucursal/update
+
+- http://localhost:9000/sucursal/delete/{id}
+
+- http://localhost:9000/sucursal/getOne/{id}
+
+- http://localhost:9000/sucursal/getAll
+
+ ```
 
 <br>
 <hr>
