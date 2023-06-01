@@ -45,6 +45,11 @@ API CRUD:
 - Youtube video - https://www.youtube.com/watch?v=QuvS_VLbGko
 ### Nivell 2 - MySQL Database:
 - Spring MySQL - https://spring.io/guides/gs/accessing-data-mysql/
+- JPA Native Query - https://www.bezkoder.com/jpa-native-query/
+```//NATIVE SQL Query
+    @Query(value = "SELECT * FROM Fruita ORDER BY id DESC", nativeQuery = true)
+    List<Fruita> allFruitsSQLNativeByIdDesc();
+```
 ### Nivell 3 - MongoDB Database:
 - https://www.devglan.com/spring-boot/spring-boot-mongodb-configuration
 - https://www.baeldung.com/spring-response-entity

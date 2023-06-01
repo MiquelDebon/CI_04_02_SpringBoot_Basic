@@ -1,7 +1,6 @@
 package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.controllers;
 
-import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.entity.Fruita;
-import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.repository.FruitaRepository;
+import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.domainEntity.Fruita;
 import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.services.FruitServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -84,6 +83,11 @@ public class FruitaControler {
         }
     }
 
+    /**
+     *
+     * EXTRAA
+     *
+     */
 
     @PostMapping("/addBase")
     public ResponseEntity<List<Fruita>> addBase (){
@@ -103,6 +107,21 @@ public class FruitaControler {
     }
 
 
+    //SQL native query
+    @GetMapping("/allFruitsSQL")
+    public ResponseEntity<List<Fruita>> getAllFruits(){
+        try{
+            List<Fruita> fruitaList = fruitServiceImpl.findAllFruitsSQLNative();
+
+            if(!fruitaList.isEmpty()){
+                return new ResponseEntity<>(fruitaList, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

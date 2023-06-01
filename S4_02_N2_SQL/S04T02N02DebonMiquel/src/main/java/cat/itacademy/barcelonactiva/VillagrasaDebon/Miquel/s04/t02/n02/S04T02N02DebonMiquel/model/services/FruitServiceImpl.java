@@ -1,6 +1,6 @@
 package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.services;
 
-import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.entity.Fruita;
+import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.domainEntity.Fruita;
 import cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.repository.FruitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +44,9 @@ public class FruitServiceImpl implements FruitService{
         return fruitaRepository.saveAll(iterableFruits);
     }
 
+    //From FruitaRespository
+    public List<Fruita> findAllFruitsSQLNative(){
+        return fruitaRepository.allFruitsSQLNativeByIdDesc();
+    }
 
 }

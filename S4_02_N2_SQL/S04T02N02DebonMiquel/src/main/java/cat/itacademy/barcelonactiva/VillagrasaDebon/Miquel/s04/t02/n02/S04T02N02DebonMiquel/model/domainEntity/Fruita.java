@@ -1,4 +1,4 @@
-package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.entity;
+package cat.itacademy.barcelonactiva.VillagrasaDebon.Miquel.s04.t02.n02.S04T02N02DebonMiquel.model.domainEntity;
 
 import jakarta.persistence.*;
 
@@ -10,7 +10,7 @@ public class Fruita {
     private int id;
     @Column (length = 50, nullable = false)
     private String name;
-    @Column (name = "quantityKg")
+    @Column (nullable = false)
     private int quantityKg;
 
 
